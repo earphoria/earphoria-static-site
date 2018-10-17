@@ -43,22 +43,42 @@ function getPosts () {
   return getFiles()
 }
 
-function getFacebook () {
-  FB.api(
-  '/150963798340232',
-  'GET',
-  {"fields":"events",
-    access_token: 'EAAgQp6fslW8BADIBuQBqCA4OPgOts1cqtON1Xna1J8uH2zZCkwZCAnls8DZAypu6uMhnXPsTATZCZAQ9Pe56SjN1hZAqGsq34HrzIN5GLJqAjbS1yV8IgWVGCZC3eVo69wqPtWRe1PXSEfpEWsAuRheLLhsJ9tTUSsWZCGE7Y0kFrHjMqNwYMw8IqOahexpOauTI6me5ZC3GTGgZDZD'},
-  function (response) {
-  if(!response || response.error) {
-   console.log(!response ? 'error occurred' : response.error);
-   return;
-  }
-  console.log(response.id);
-  console.log(response.name);
-});
 
+
+// function getFacebook () {
+//   FB.api(
+//   '/150963798340232',
+//   'GET',
+//   {"fields":"events",
+//     access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
+//   function handleResponse(response) {
+//   if(!response || response.error) {
+//    console.log(!response ? 'error occurred' : response.error);
+//    return;
+//   }
+//   console.log(response.id);
+//   // console.log(response.events);
+//   console.log(typeof(response));
+//   return response;
+// });
+// }
+function getFacebook() {
+
+FB.api('150963798340232', { fields: 'events',
+access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
+function (res) {
+  if(!res || res.error) {
+    console.log(!res ? 'error occurred' : res.error);
+    return;
+  }
+  // console.log(res.id);
+  // console.log(res.name);
+  // console.log(JSON.stringify(res.events.data))
+
+  return(res.events.data)
+});
 }
+
 
 
 export default {
@@ -68,17 +88,23 @@ export default {
   }),
   getRoutes: async () => {
     const posts = await getPosts()
+    const fbData = await getFacebook()
+    // console.log("POSTS: ", posts)
+    console.log(fbData)
     return [
       {
         path: '/',
         component: 'src/containers/Home',
-        getData: async () => ({
-          data: await getFacebook()
+        getData: () => ({
+          fbData,
         })
       },
       {
         path: '/about',
         component: 'src/containers/About',
+        getData: () => ({
+          fbData,
+        })
       },
       {
         path: '/blog',

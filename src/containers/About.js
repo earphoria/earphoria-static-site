@@ -1,10 +1,27 @@
-
 import React from 'react'
+import { RouteData, withRouteData } from 'react-static'
+import { List } from 'semantic-ui-react'
 //
+//
+
+
+const DataList = ({ data }) => (
+  <div>
+    <h1>About</h1>
+    {JSON.stringify(data)}
+  </div>
+)
 
 export default () => (
   <div>
-    <h1>This is what we're all about.</h1>
-    <p>React, static sites, performance, speed. It's the stuff that makes us tick.</p>
+    <RouteData component={DataList}/>
   </div>
 )
+
+// export default () => (
+//   <RouteData render={({ data }) => (
+//     <div>
+//       {JSON.stringify(data)}
+//     </div>
+//   )} />
+// )
