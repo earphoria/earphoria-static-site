@@ -61,46 +61,12 @@ async function getFacebook(...fields) {
     }
 }
 
-// function getFacebook () {
-//   FB.api(
-//   '/150963798340232',
-//   'GET',
-//   {"fields":"events",
-//     access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
-//   function handleResponse(response) {
-//   if(!response || response.error) {
-//    console.log(!response ? 'error occurred' : response.error);
-//    return;
-//   }
-//   // console.log(response.id);
-//   // console.log(response.events);
-//   // console.log(typeof(response));
-//   return response;
-// });
-// }
-// function getFacebook() {
-//
-// FB.api('150963798340232', { fields: 'events',
-// access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
-// function (res) {
-//   if(!res || res.error) {
-//     console.log(!res ? 'error occurred' : res.error);
-//     return;
-//   }
-//   // console.log(res.id);
-//   // console.log(res.name);
-//   // console.log(JSON.stringify(res.events.data))
-//
-//   return(res.events.data)
-// });
-// }
-
-
-
 export default {
 
-  getSiteData: () => ({
+  getSiteData: async () => ({
     title: 'React Static with Netlify CMS',
+    events: await getFacebook("events{name, start_time}"),
+
   }),
   getRoutes: async () => {
     const posts = await getPosts()
@@ -109,16 +75,27 @@ export default {
       {
         path: '/',
         component: 'src/containers/Home',
-        getData: () => ({
-          fbData,
+        getData: async () => ({
+          events: await getFacebook("events{name, start_time}"),
+
         })
       },
       {
         path: '/about',
         component: 'src/containers/About',
         getData: async () => ({
-
-          data: await getFacebook("events", "id"),
+          //can specify fields from the facebook api response to include
+          //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
+          about: await getFacebook("about", "location"),
+        })
+      },
+      {
+        path: '/projects',
+        component: 'src/containers/Projects',
+        getData: async () => ({
+          //can specify fields from the facebook api response to include
+          //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
+          about: await getFacebook("about", "location"),
         })
       },
       {
@@ -147,6 +124,7 @@ export default {
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"></link>
+      <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
     </Head>
     <Body>{children}</Body>
   </Html>

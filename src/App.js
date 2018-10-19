@@ -9,11 +9,14 @@ import './app.css'
 const App = () => (
   <Router>
     <div>
-      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"></link>
       <nav>
         <Link exact to="/">Home</Link>
         <Link to="/about">About</Link>
-        <Link to="/blog">Blog</Link>
+        <Link to="/events">Events</Link>
+        <Link to="/media">Media</Link>
+        <Link to="/projects">Projects</Link>
+        <Link to="/news">News</Link>
+        <Link to="/contact">Contact</Link>
       </nav>
       <div className="content">
         <Routes />

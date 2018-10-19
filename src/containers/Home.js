@@ -1,24 +1,31 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withSiteData, RouteData } from 'react-static'
-import { List } from 'semantic-ui-react'
+import { Container, Feed, List } from 'semantic-ui-react'
 //
 import logoImg from '../logo.png'
 
-const DataList = ({ data }) => (
+const DataList = ({ events }) => (
   <div>
-    <h1>Top 100 Spotify Songs</h1>
-    <List items={[data]} />
+    <Feed events={events} />
+    {JSON.stringify(events.events.data)}
   </div>
 )
 
 const ExampleList = () => <List items={['Apples', 'Pears', 'Oranges']} />
 
-export default withSiteData(() => (
-  <div>
-    <h1 style={{ textAlign: 'center' }}>Welcome to</h1>
-    <img src={logoImg} alt="" style={{ display: 'block', margin: '0 auto' }} />
-    <ExampleList />
 
+export default withSiteData(() => (
+<div>
+  <Container>
+    intro hero
+
+  </Container>
+
+ events
     <RouteData component={DataList}/>
+social media buttons
+subscribe
+listen
   </div>
 ))

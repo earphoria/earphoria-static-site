@@ -7,19 +7,19 @@ import { List } from 'semantic-ui-react'
 
 
 
-const DataList = ({ data }) => (
+const DataList = ({ about }) => (
 
   <div>
     <h1>About</h1>
-    {JSON.stringify(data)}
+    {JSON.stringify(about)}
   </div>
 )
 
-export default withRouteData(() => (
+export default () => (
   <div>
     <RouteData component={DataList}/>
   </div>
-))
+)
 
 // export default () => (
 //   <RouteData render={({ data }) => (
