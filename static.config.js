@@ -43,7 +43,23 @@ function getPosts () {
   return getFiles()
 }
 
-
+async function getFacebook(...fields) {
+    try {
+        const response = await FB.api(  '/150963798340232',
+          'GET',
+          {"fields": fields,
+            access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'});
+        return response
+    }
+    catch(error) {
+        if(error.response.error.code === 'ETIMEDOUT') {
+            console.log('request timeout');
+        }
+        else {
+            console.log('error', error.message);
+        }
+    }
+}
 
 // function getFacebook () {
 //   FB.api(
@@ -56,28 +72,28 @@ function getPosts () {
 //    console.log(!response ? 'error occurred' : response.error);
 //    return;
 //   }
-//   console.log(response.id);
+//   // console.log(response.id);
 //   // console.log(response.events);
-//   console.log(typeof(response));
+//   // console.log(typeof(response));
 //   return response;
 // });
 // }
-function getFacebook() {
-
-FB.api('150963798340232', { fields: 'events',
-access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
-function (res) {
-  if(!res || res.error) {
-    console.log(!res ? 'error occurred' : res.error);
-    return;
-  }
-  // console.log(res.id);
-  // console.log(res.name);
-  // console.log(JSON.stringify(res.events.data))
-
-  return(res.events.data)
-});
-}
+// function getFacebook() {
+//
+// FB.api('150963798340232', { fields: 'events',
+// access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'},
+// function (res) {
+//   if(!res || res.error) {
+//     console.log(!res ? 'error occurred' : res.error);
+//     return;
+//   }
+//   // console.log(res.id);
+//   // console.log(res.name);
+//   // console.log(JSON.stringify(res.events.data))
+//
+//   return(res.events.data)
+// });
+// }
 
 
 
@@ -88,9 +104,7 @@ export default {
   }),
   getRoutes: async () => {
     const posts = await getPosts()
-    const fbData = await getFacebook()
-    // console.log("POSTS: ", posts)
-    console.log(fbData)
+    const fbData = await getFacebook("events")
     return [
       {
         path: '/',
@@ -102,8 +116,9 @@ export default {
       {
         path: '/about',
         component: 'src/containers/About',
-        getData: () => ({
-          fbData,
+        getData: async () => ({
+
+          data: await getFacebook("events", "id"),
         })
       },
       {
