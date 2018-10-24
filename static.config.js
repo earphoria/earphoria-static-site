@@ -48,7 +48,9 @@ async function getFacebook(...fields) {
         const response = await FB.api(  '/150963798340232',
           'GET',
           {"fields": fields,
-            access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD'});
+            access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+            time_filter: 'upcoming',
+          });
         return response
     }
     catch(error) {
@@ -60,6 +62,28 @@ async function getFacebook(...fields) {
         }
     }
 }
+
+async function getFacebookEvents() {
+    try {
+        const response = await FB.api( 'events',
+          { id: 'hostelearphoria',
+            'fields': 'id, name, description, start_time, cover',
+            access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+            time_filter: 'upcoming',
+          });
+          console.log(response)
+        return response
+    }
+    catch(error) {
+        if(error.response.error.code === 'ETIMEDOUT') {
+            console.log('request timeout');
+        }
+        else {
+            console.log('error', error.message);
+        }
+    }
+}
+
 
 export default {
 
@@ -76,7 +100,7 @@ export default {
         path: '/',
         component: 'src/containers/Home',
         getData: async () => ({
-          events: await getFacebook("events{name, start_time}"),
+          events: await getFacebookEvents(),
 
         })
       },
