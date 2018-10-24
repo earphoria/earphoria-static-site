@@ -51,6 +51,7 @@ async function getFacebook(...fields) {
             access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
             time_filter: 'upcoming',
           });
+          console.log(response)
         return response
     }
     catch(error) {
@@ -71,7 +72,6 @@ async function getFacebookEvents() {
             access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
             time_filter: 'upcoming',
           });
-          console.log(response)
         return response
     }
     catch(error) {
@@ -89,12 +89,11 @@ export default {
 
   getSiteData: async () => ({
     title: 'React Static with Netlify CMS',
-    events: await getFacebook("events{name, start_time}"),
+    aboutSite:  await getFacebook("about"),
 
   }),
   getRoutes: async () => {
     const posts = await getPosts()
-    const fbData = await getFacebook("events")
     return [
       {
         path: '/',

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withSiteData, RouteData , Link} from 'react-static'
+import { SiteData, withSiteData, RouteData , Link} from 'react-static'
 import { Card, Container, Feed, List , Image, Segment, Item} from 'semantic-ui-react'
 //
 import logoImg from '../logo.png'
@@ -35,12 +35,20 @@ const UpcomingEvents = ({ events }) => (
 const ExampleList = () => <List items={['Apples', 'Pears', 'Oranges']} />
 
 
-export default withSiteData(() => (
-<div className='parallax' fluid style={{backgroundImage: `url(${piano})`}}>
-  <Container >
-    intro hero
+const About = ({ aboutSite}) => (
+  <div>{aboutSite}}</div>
+)
 
-  </Container>
+export default () => (
+<div className='parallax' fluid style={{backgroundImage: `url(${piano})`}}>
+  <Segment >
+    <SiteData>
+{({ aboutSite}) => (
+  <div>{aboutSite.about}</div>
+)}
+</SiteData>
+
+</Segment>
 
 
    <RouteData component={UpcomingEvents}/>
@@ -50,4 +58,4 @@ social media buttons
 subscribe
 listen
   </div>
-))
+)
