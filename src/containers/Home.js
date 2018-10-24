@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withSiteData, RouteData } from 'react-static'
-import { Container, Feed, List } from 'semantic-ui-react'
+import { Container, Feed, List , Image} from 'semantic-ui-react'
 //
 import logoImg from '../logo.png'
+
 
 const DataList = ({ events }) => (
   <div>
@@ -17,10 +18,10 @@ const ExampleList = () => <List items={['Apples', 'Pears', 'Oranges']} />
 
 export default withSiteData(() => (
 <div>
-  <Container>
+  <div className='parallax' fluid>
     intro hero
 
-  </Container>
+  </div>
 
  events
     <RouteData component={DataList}/>
