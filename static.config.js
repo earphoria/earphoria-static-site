@@ -51,7 +51,6 @@ async function getFacebook(...fields) {
             access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
             time_filter: 'upcoming',
           });
-          console.log(response)
         return response
     }
     catch(error) {
@@ -72,6 +71,7 @@ async function getFacebookEvents() {
             access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
             time_filter: 'upcoming',
           });
+
         return response
     }
     catch(error) {
@@ -88,8 +88,8 @@ async function getFacebookEvents() {
 export default {
 
   getSiteData: async () => ({
-    title: 'React Static with Netlify CMS',
-    aboutSite:  await getFacebook("about"),
+    title: 'Hostel Earphoria',
+    aboutSite:  await getFacebook("about", "location"),
 
   }),
   getRoutes: async () => {
