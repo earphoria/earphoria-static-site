@@ -35,9 +35,22 @@ const UpcomingEvents = ({ events }) => (
   </Card.Group>
 )
 
+const RatingsCard = ({ ratings }) => (
+  <Card.Group>
+    {ratings.ratings.data.map((rating, index) => (
+      <Card
+        key={index}
+        description={rating.review_text}
+      />
+    ))}
+  </Card.Group>
+)
+
 const Hero = ({title}) => <div><h1>{title}</h1></div>
 
 const About = ({ aboutSite }) => <div>{aboutSite.about}</div>
+
+const Ratings = ({ratings}) => <div>{JSON.stringify(ratings.ratings.data)}</div>
 
 export default () => (
   <Container className="parallax" fluid style={{ backgroundImage: `url(${piano})` }}>
@@ -47,7 +60,11 @@ export default () => (
     <Segment>
       <SiteData component={About} />
     </Segment>
+    <Segment>
+      <RouteData component={Ratings} />
+    </Segment>
     <RouteData component={UpcomingEvents} />
+        <RouteData component={RatingsCard} />
     social media buttons subscribe listen
   </Container>
 )

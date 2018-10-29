@@ -43,14 +43,13 @@ function getPosts () {
   return getFiles()
 }
 
-async function getFacebook(...fields) {
+
+async function getFacebook(endpoint, ...args) {
     try {
-        const response = await FB.api(  '/150963798340232',
+        console.log(args)
+        const response = await FB.api( endpoint,
           'GET',
-          {"fields": fields,
-            access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
-            time_filter: 'upcoming',
-          });
+          args);
         return response
     }
     catch(error) {
@@ -89,17 +88,34 @@ export default {
 
   getSiteData: async () => ({
     title: 'Hostel Earphoria',
-    aboutSite:  await getFacebook("about", "location"),
-
+    aboutSite:  await FB.api( 'hostelearphoria',
+      {
+        'fields': 'about, location',
+        access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+      }),
   }),
   getRoutes: async () => {
     const posts = await getPosts()
+    const about = await FB.api( 'hostelearphoria',
+      {
+        'fields': 'about, location',
+        access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+      })
+    const events = await getFacebookEvents()
+    const ratings = await FB.api( 'hostelearphoria',
+      {
+        'fields': 'ratings',
+        access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+      })
+
     return [
       {
         path: '/',
         component: 'src/containers/Home',
         getData: async () => ({
-          events: await getFacebookEvents(),
+          about: about,
+          events: events,
+          ratings: ratings,
 
         })
       },
@@ -109,7 +125,16 @@ export default {
         getData: async () => ({
           //can specify fields from the facebook api response to include
           //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
-          about: await getFacebook("about", "location"),
+          data: about,
+        })
+      },
+      {
+        path: '/ratings',
+        component: 'src/containers/About',
+        getData: async () => ({
+          //can specify fields from the facebook api response to include
+          //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
+          data: ratings,
         })
       },
       {
