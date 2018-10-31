@@ -45,35 +45,24 @@ const UpcomingEvents = ({ events }) => (
   </Card.Group>
 )
 
-function RandomRatingsCard({ ratings }) {
-  console.log(ratings)
+function RatingsCard({ ratings }) {
   let rating = random_item(ratings.ratings.data)
-  if (rating.hasOwnProperty("review_text")){
     return (
       <Segment piled>
-      <Card
-        meta={new Date(rating.created_time).toDateString()}
-        description={rating.review_text}
-      />
-    <Button onClick={RandomRatingsCard}> Cool </Button>
+        {JSON.stringify(rating)}
       </Segment>
     )
-  } else {
-    let rating = random_item(ratings.ratings.data)
-  }
-
 }
+
 
 const RatingsCardGroup = ({ ratings }) => (
   <Card.Group>
     {ratings.ratings.data.map((rating, index) => {
-          if(rating.review_text){
             return <Card
               key={index}
               meta={new Date(rating.created_time).toDateString()}
               description={rating.review_text}
             />
-          }
         }
       )
     }
@@ -95,7 +84,8 @@ export default () => (
       <SiteData component={About} />
     </Segment>
     <Segment>
-      <RouteData component={RandomRatingsCard} />
+      <RouteData component={RatingsCard} />
+      <Button onClick={RatingsCard}>New Rating</Button>
       <RouteData component={Ratings} />
     </Segment>
     <RouteData component={UpcomingEvents} />
