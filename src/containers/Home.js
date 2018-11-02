@@ -15,6 +15,8 @@ import {
 //
 import logoImg from '../logo.png'
 import piano from '../../public/uploads/piano.jpg'
+import {Animated} from "react-animated-css"
+
 
 // helper, utility functions
 function truncateString(s, n) {
@@ -26,7 +28,10 @@ function truncateString(s, n) {
 function random_item(items)
 {
 
-return items[Math.floor(Math.random()*items.length)];
+let itemIndex = Math.floor(Math.random()*items.length)
+console.log(itemIndex)
+return items[itemIndex]
+
 
 }
 
@@ -54,8 +59,58 @@ function RatingsCard({ ratings }) {
     )
 }
 
+class Rating extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedRating: this.props.ratings.ratings.data[0],
+      clicked: false,
+      isVisible: true
+    }
+  }
+
+  toggleVisible () {
+  this.setState({
+    isVisible: !this.state.isVisible
+  })
+}
+  toggle = e => this.setState(state => ({ index: state.index === 2 ? 0 : state.index + 1 }))
+
+  randomEntry = () => {
+    this.setState({
+      clicked: true,
+      selectedRating: random_item(this.props.ratings.ratings.data),
+      isVisible: false
+    })
+  }
+
+  render() {
+    return (
+
+      <div>
+
+      <div className="Rating">
+                  <Segment piled>
+        <Button onClick={this.randomEntry}>Random Rating</Button>
+          <button onClick={this.toggleVisible.bind(this)} >
+    Click to show modal
+  </button>
+  {!this.state.isHidden && <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}> {JSON.stringify(this.state.selectedRating)} </Animated>
+}
+
+
+
+            </Segment>
+
+      </div>
+
+  </div>
+    )
+  }
+}
 
 const RatingsCardGroup = ({ ratings }) => (
+
   <Card.Group>
     {ratings.ratings.data.map((rating, index) => {
             return <Card
@@ -84,9 +139,7 @@ export default () => (
       <SiteData component={About} />
     </Segment>
     <Segment>
-      <RouteData component={RatingsCard} />
-      <Button onClick={RatingsCard}>New Rating</Button>
-      <RouteData component={Ratings} />
+      <RouteData component={Rating} />
     </Segment>
     <RouteData component={UpcomingEvents} />
 

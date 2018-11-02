@@ -15,11 +15,14 @@
     "klaw": "^2.1.1",
     "moment": "^2.20.1",
     "react": "^16.0.0",
+    "react-animated-css": "^1.0.4",
+    "react-css-transition-replace": "^3.0.3",
     "react-dom": "^16.0.0",
     "react-hot-loader": "^4.0.0-beta.21",
     "react-markdown": "^3.1.0",
     "react-moment": "^0.7.0",
     "react-router": "^4.2.0",
+    "react-spring": "^6.1.5",
     "react-static": "^5.9.12"
   },
   "devDependencies": {

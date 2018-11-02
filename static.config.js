@@ -173,7 +173,9 @@ export default {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"></link>
       <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
-    </Head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css"/>
+
+  </Head>
     <Body>{children}</Body>
   </Html>
 ),
