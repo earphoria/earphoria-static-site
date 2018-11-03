@@ -15,8 +15,6 @@ import {
 //
 import logoImg from '../logo.png'
 import piano from '../../public/uploads/piano.jpg'
-import {Animated} from "react-animated-css"
-
 
 // helper, utility functions
 function truncateString(s, n) {
@@ -28,10 +26,7 @@ function truncateString(s, n) {
 function random_item(items)
 {
 
-let itemIndex = Math.floor(Math.random()*items.length)
-console.log(itemIndex)
-return items[itemIndex]
-
+return items[Math.floor(Math.random()*items.length)];
 
 }
 
@@ -50,74 +45,35 @@ const UpcomingEvents = ({ events }) => (
   </Card.Group>
 )
 
-function RatingsCard({ ratings }) {
+function RandomRatingsCard({ ratings }) {
+  console.log(ratings)
   let rating = random_item(ratings.ratings.data)
+  if (rating.hasOwnProperty("review_text")){
     return (
       <Segment piled>
-        {JSON.stringify(rating)}
+      <Card
+        meta={new Date(rating.created_time).toDateString()}
+        description={rating.review_text}
+      />
+    <Button onClick={RandomRatingsCard}> Cool </Button>
       </Segment>
     )
-}
-
-class Rating extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedRating: this.props.ratings.ratings.data[0],
-      clicked: false,
-      isVisible: true
-    }
+  } else {
+    let rating = random_item(ratings.ratings.data)
   }
 
-  toggleVisible () {
-  this.setState({
-    isVisible: !this.state.isVisible
-  })
-}
-  toggle = e => this.setState(state => ({ index: state.index === 2 ? 0 : state.index + 1 }))
-
-  randomEntry = () => {
-    this.setState({
-      clicked: true,
-      selectedRating: random_item(this.props.ratings.ratings.data),
-      isVisible: false
-    })
-  }
-
-  render() {
-    return (
-
-      <div>
-
-      <div className="Rating">
-                  <Segment piled>
-        <Button onClick={this.randomEntry}>Random Rating</Button>
-          <button onClick={this.toggleVisible.bind(this)} >
-    Click to show modal
-  </button>
-  {!this.state.isHidden && <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}> {JSON.stringify(this.state.selectedRating)} </Animated>
-}
-
-
-
-            </Segment>
-
-      </div>
-
-  </div>
-    )
-  }
 }
 
 const RatingsCardGroup = ({ ratings }) => (
-
   <Card.Group>
     {ratings.ratings.data.map((rating, index) => {
+          if(rating.review_text){
             return <Card
               key={index}
               meta={new Date(rating.created_time).toDateString()}
               description={rating.review_text}
             />
+          }
         }
       )
     }
@@ -139,7 +95,7 @@ export default () => (
       <SiteData component={About} />
     </Segment>
     <Segment>
-      <RouteData component={Rating} />
+      <RouteData component={RandomRatingsCard} />
     </Segment>
     <RouteData component={UpcomingEvents} />
 

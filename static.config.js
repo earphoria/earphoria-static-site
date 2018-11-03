@@ -104,7 +104,7 @@ export default {
     const events = await getFacebookEvents()
     const ratings = await FB.api( 'hostelearphoria',
       {
-        'fields': 'ratings{review_text, has_review:true}',
+        'fields': 'ratings{review_text, created_time, has_review:true}',
         access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
       })
 
