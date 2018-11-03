@@ -70,7 +70,7 @@ const RatingsCardGroup = ({ ratings }) => (
           if(rating.review_text){
             return <Card
               key={index}
-              meta={JSON.stringify(rating)}
+              meta={new Date(rating.created_time).toDateString()}
               description={rating.review_text}
             />
           }
@@ -96,7 +96,6 @@ export default () => (
     </Segment>
     <Segment>
       <RouteData component={RandomRatingsCard} />
-      <RouteData component={Ratings} />
     </Segment>
     <RouteData component={UpcomingEvents} />
 
