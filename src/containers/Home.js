@@ -94,9 +94,6 @@ export default () => (
     <Segment>
       <SiteData component={About} />
     </Segment>
-    <Segment>
-      <RouteData component={RandomRatingsCard} />
-    </Segment>
     <RouteData component={UpcomingEvents} />
 
     <RouteData component={RatingsCardGroup} />

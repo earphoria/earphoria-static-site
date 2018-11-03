@@ -138,6 +138,19 @@ export default {
         })
       },
       {
+        path: '/events',
+        component: 'src/containers/About',
+        getData: async () => ({
+          //can specify fields from the facebook api response to include
+          //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
+          data: await FB.api( 'hostelearphoria',
+            {
+              'fields': 'events',
+              access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
+            }),
+        })
+      },
+      {
         path: '/projects',
         component: 'src/containers/Projects',
         getData: async () => ({
