@@ -7,11 +7,11 @@ import { List } from 'semantic-ui-react'
 
 
 
-const DataList = ({ about }) => (
+const DataList = ({ data }) => (
 
   <div>
     <h1>About</h1>
-    {JSON.stringify(about)}
+    {JSON.stringify(data)}
   </div>
 )
 
