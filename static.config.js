@@ -62,13 +62,13 @@ async function getFacebook(endpoint, ...args) {
     }
 }
 
-async function getFacebookEvents() {
+async function getFacebookEvents(time_filter) {
     try {
         const response = await FB.api( 'events',
           { id: 'hostelearphoria',
             'fields': 'id, name, description, start_time, cover',
             access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
-            time_filter: 'upcoming',
+            time_filter: time_filter,
           });
 
         return response
@@ -101,7 +101,7 @@ export default {
         'fields': 'about, location',
         access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
       })
-    const events = await getFacebookEvents()
+    const events = await getFacebookEvents('upcoming')
     const ratings = await FB.api( 'hostelearphoria',
       {
         'fields': 'ratings{review_text, created_time, has_review:true}',
@@ -130,24 +130,20 @@ export default {
       },
       {
         path: '/ratings',
-        component: 'src/containers/About',
+        component: 'src/containers/Ratings',
         getData: async () => ({
           //can specify fields from the facebook api response to include
           //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
-          data: ratings,
+          ratings: ratings,
         })
       },
       {
         path: '/events',
-        component: 'src/containers/About',
+        component: 'src/containers/Events',
         getData: async () => ({
           //can specify fields from the facebook api response to include
           //can also expand nested fields https://developers.facebook.com/docs/graph-api/advanced/#fieldexpansion
-          data: await FB.api( 'hostelearphoria',
-            {
-              'fields': 'events',
-              access_token: 'EAAgQp6fslW8BAFfHp6vsp4OZB2ZCqOed9uj7GZCqR4LpfZCyMkQImcZA5LFVtdqoQmbbFM3aVkAuWktGFf7aJaSNgaiXPszE2qdLSQish4IsnHG9iCUtmas2O3adgpvrjHu93lR39b6tCID7FAiKUvnORXe9Yex0JggZAYntQjegZDZD',
-            }),
+          data: await getFacebookEvents(),
         })
       },
       {

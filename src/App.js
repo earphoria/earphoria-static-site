@@ -21,6 +21,7 @@ const App = () => (
         <Menu.Item> <Link exact to="/">Home</Link></Menu.Item>
         <Menu.Item> <Link to="/about">About</Link></Menu.Item>
         <Menu.Item> <Link to="/events">Events</Link></Menu.Item>
+        <Menu.Item> <Link to="/ratings">Reviews</Link></Menu.Item>
         <Menu.Item> <Link to="/media">Media</Link></Menu.Item>
         <Menu.Item> <Link to="/projects">Projects</Link></Menu.Item>
         <Menu.Item> <Link to="/news">News</Link></Menu.Item>

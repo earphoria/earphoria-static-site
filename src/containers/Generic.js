@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteData, SiteData, withRouteData } from 'react-static'
-import { List, Card } from 'semantic-ui-react'
+import { Card, List } from 'semantic-ui-react'
 
 //
 //
@@ -10,8 +10,7 @@ import { List, Card } from 'semantic-ui-react'
 const DataList = ({ data }) => (
 
   <div>
-    <h1>About</h1>
-    {JSON.stringify(data)}
+    <Card>{JSON.stringify(data)}</Card>
   </div>
 )
 
@@ -20,7 +19,6 @@ const About = ({ aboutSite }) => <div>{aboutSite.about}</div>
 export default () => (
   <div>
     <RouteData component={DataList}/>
-    <SiteData component={About}/>
   </div>
 )
 
