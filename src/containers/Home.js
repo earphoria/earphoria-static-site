@@ -17,6 +17,7 @@ import logoImg from '../logo.png'
 import piano from '../../public/uploads/piano.jpg'
 import RatingsCardGroup from './Ratings'
 import {truncateString} from '../utils.js'
+import { ParallaxBanner} from 'react-scroll-parallax'
 
 const UpcomingEvents = ({ events }) => (
   <Card.Group>
@@ -54,7 +55,7 @@ function RandomRatingsCard({ ratings }) {
 
 
 
-const Hero = ({title}) => <div><h1>{title}</h1></div>
+const Hero = ({title, aboutSite}) => <div><h1>{title}</h1><p>{aboutSite.about}</p></div>
 
 
 
@@ -62,11 +63,33 @@ const Hero = ({title}) => <div><h1>{title}</h1></div>
 const RatingsList = ({ratings}) => <Message positive >{JSON.stringify(ratings.ratings)}</Message>
 
 export default () => (
-  <Container className="parallax" fluid style={{ backgroundImage: `url(${piano})` }}>
+  <Container >
+    <ParallaxBanner
+        className={'bannerBg'}
+        layers={[
+            {
+                amount: 0.3,
+                children: (
+                    <video
+                        className={'video'}
+                        autoPlay
+                        loop
+                        playsInline
+                        preload="auto"
+                        muted
+                        poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/boats-at-sea.jpg"
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/boats-at-sea-720.mp4"
+                    />
+                ),
+                slowerScrollRate: true,
+            },
+        ]}
+    >
     <Segment>
-      <SiteData component={Hero} />
+            <SiteData component={Hero} />
     </Segment>
 
+    </ParallaxBanner>
     <RouteData component={UpcomingEvents} />
 
     <RouteData component={RatingsCardGroup} />

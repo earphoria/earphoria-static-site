@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader'
 import {Menu, Segment } from 'semantic-ui-react'
 //
 import Routes from 'react-static-routes'
-
+import { ParallaxProvider } from 'react-scroll-parallax';
 import './app.css'
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
 ]
 
 const App = () => (
+  <ParallaxProvider>
   <Router>
     <div>
       <nav>
@@ -33,6 +34,7 @@ const App = () => (
       </div>
     </div>
   </Router>
+</ParallaxProvider>
 )
 
 export default hot(module)(App)

@@ -47,3 +47,7 @@ body {
 .cross-fade-height {
   transition: height .5s ease-in-out;
 }
+
+.bannerBg {
+  z-index: -1;
+}
