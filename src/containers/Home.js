@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { SiteData, withSiteData, RouteData, Link, withRouteData } from 'react-static'
 import {
+  Header,
   Card,
   Container,
   Feed,
@@ -20,6 +21,7 @@ import {truncateString} from '../utils.js'
 import { ParallaxBanner} from 'react-scroll-parallax'
 
 const UpcomingEvents = ({ events }) => (
+
   <Card.Group>
     {events.data.map((event, index) => (
       <Card
@@ -63,35 +65,13 @@ const Hero = ({title, aboutSite}) => <div><h1>{title}</h1><p>{aboutSite.about}</
 const RatingsList = ({ratings}) => <Message positive >{JSON.stringify(ratings.ratings)}</Message>
 
 export default () => (
-  <Container >
-    <ParallaxBanner
-        className={'bannerBg'}
-        layers={[
-            {
-                amount: 0.3,
-                children: (
-                    <video
-                        className={'video'}
-                        autoPlay
-                        loop
-                        playsInline
-                        preload="auto"
-                        muted
-                        poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/boats-at-sea.jpg"
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/boats-at-sea-720.mp4"
-                    />
-                ),
-                slowerScrollRate: true,
-            },
-        ]}
-    >
+  <Container fluid>
     <Segment>
             <SiteData component={Hero} />
     </Segment>
-
-    </ParallaxBanner>
+    <Header as='h2'content='Upoming Events'/>
     <RouteData component={UpcomingEvents} />
-
+    <Header as='h2'content='Nice Words'/>
     <RouteData component={RatingsCardGroup} />
 
 

@@ -130,7 +130,7 @@ export default {
         component: 'src/containers/Home',
         getData: async () => ({
           about: about,
-          events: events,
+          events: JSON.parse(fs.readFileSync('./src/content/fb-data/upcoming-events.json')),
           ratings: ratings,
 
         })

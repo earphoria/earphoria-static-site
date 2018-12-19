@@ -32,7 +32,7 @@ const RatingsCardGroup = ({ ratings }) => (
 )
 
 export default () => (
-  <Container className="parallax" fluid style={{ backgroundImage: `url(${piano})` }}>
+  <Container>
 
     <RouteData component={RatingsCardGroup} />
 
