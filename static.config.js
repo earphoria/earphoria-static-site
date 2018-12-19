@@ -6,6 +6,7 @@ const FB = require('fb');
 import React, { Component } from 'react'
 
 
+
 function getPosts () {
   const items = []
   // Walk ("klaw") through posts directory and push file paths into items array //
@@ -68,7 +69,7 @@ async function getFacebookEvents(time_filter) {
         const response = await FB.api( 'events',
           { id: 'hostelearphoria',
             'fields': 'id, name, description, start_time, cover',
-            access_token: 'EAAgQp6fslW8BAA3dZAqxk0jT0JqPJxNheMXcUb9puXOsajA5AkugXfXcmJnsZB5NgCkFYOgoKvRsrZCyZCrW0m4UziSLZBBDXIpKfyTok1imehgDyllsDZBCWPhD8uhzNFvNqM8V9TTn5rIt6IOF5LPUKY6DwRaNMULKZBrCUqt1eOknc34jVz9cd4w0gSW2fNQYGLjL3KhbQZDZD',
+            access_token: await getToken(),
             time_filter: time_filter,
           });
 
@@ -84,29 +85,43 @@ async function getFacebookEvents(time_filter) {
     }
 }
 
+async function getToken() {
+  const page_access_token = `EAAgQp6fslW8BAF33BfkiBB0d5OIZBOZBxZAnTeGa1H7ZCchZCMpiDut3QIHSMUj2vCOl7T2UuIZCkAAFORkk20XJvYMIDIZCP8vEFXro2Ia5ldxayLuQRZCzeNS7E76oz6Qh2X18ttOremEEgiX6L8wbGttOZCDrnJ0MK0zwV7kAD7W8hxYrsZB3oNmr2AK3KZAhM8ZD`
+  return page_access_token
+}
+
+
 
 export default {
+
 
   getSiteData: async () => ({
     title: 'Hostel Earphoria',
     aboutSite:  await FB.api('hostelearphoria',
       {
-        'fields': 'about, location',
-        access_token: 'EAAgQp6fslW8BAA3dZAqxk0jT0JqPJxNheMXcUb9puXOsajA5AkugXfXcmJnsZB5NgCkFYOgoKvRsrZCyZCrW0m4UziSLZBBDXIpKfyTok1imehgDyllsDZBCWPhD8uhzNFvNqM8V9TTn5rIt6IOF5LPUKY6DwRaNMULKZBrCUqt1eOknc34jVz9cd4w0gSW2fNQYGLjL3KhbQZDZD',
+        'fields': 'about',
+        access_token: await getToken(),
       }),
   }),
   getRoutes: async () => {
     const posts = await getPosts()
+
     const about = await FB.api( 'hostelearphoria',
       {
         'fields': 'about, location',
-        access_token: 'EAAgQp6fslW8BAA3dZAqxk0jT0JqPJxNheMXcUb9puXOsajA5AkugXfXcmJnsZB5NgCkFYOgoKvRsrZCyZCrW0m4UziSLZBBDXIpKfyTok1imehgDyllsDZBCWPhD8uhzNFvNqM8V9TTn5rIt6IOF5LPUKY6DwRaNMULKZBrCUqt1eOknc34jVz9cd4w0gSW2fNQYGLjL3KhbQZDZD',
+        access_token: await getToken(),
       })
-    const events = await getFacebookEvents('upcoming')
+    const upcomingEvents = await getFacebookEvents('upcoming')
+    const events = await getFacebookEvents()
+    const eventsData = JSON.stringify(events, 2)
+    const upcomingEventsData = JSON.stringify(upcomingEvents, 2)
+    fs.writeFileSync('./src/content/fb-data/all-events.json', eventsData)
+    fs.writeFileSync('./src/content/fb-data/upcoming-events.json', upcomingEventsData)
+
     const ratings = await FB.api( 'hostelearphoria',
       {
         'fields': 'ratings{review_text, created_time, has_review:true}',
-        access_token: 'EAAgQp6fslW8BAA3dZAqxk0jT0JqPJxNheMXcUb9puXOsajA5AkugXfXcmJnsZB5NgCkFYOgoKvRsrZCyZCrW0m4UziSLZBBDXIpKfyTok1imehgDyllsDZBCWPhD8uhzNFvNqM8V9TTn5rIt6IOF5LPUKY6DwRaNMULKZBrCUqt1eOknc34jVz9cd4w0gSW2fNQYGLjL3KhbQZDZD',
+        access_token: await getToken(),
       })
 
     return [
